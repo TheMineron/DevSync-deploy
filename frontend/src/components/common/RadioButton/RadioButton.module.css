@@ -1,0 +1,39 @@
+.radio_input {
+    display: none;
+}
+
+.radio_wrapper {
+    min-width: 145px;
+    height: 47px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: 3px solid #FFDD2D;
+    width: auto;
+    padding: 0 20px;
+}
+
+.radio_wrapper:hover {
+    cursor: pointer;
+}
+
+.radio_label {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 35px;
+    letter-spacing: 0;
+    color: #000000;
+    display: inline-block;
+}
+
+.checked {
+    border: 3px solid #FFDD2D;
+    background-color: #FFDD2D;
+}
+
+.checked .radio_label {
+    color: #000000;
+}

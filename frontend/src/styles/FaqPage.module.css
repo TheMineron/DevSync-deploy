@@ -1,0 +1,196 @@
+.heading {
+    text-align: center;
+    padding: 47px 0 0 0;
+}
+
+.heading h1 {
+    font-size: 50px;
+    font-weight: 400;
+    font-family: 'NT Somic', sans-serif;
+    letter-spacing: 0;
+    line-height: 100%;
+    color: #353536;
+}
+
+.heading p {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 140%;
+    letter-spacing: 0;
+    horiz-align: center;
+    color: #353536;
+    margin-top: 18px;
+}
+
+.container {
+    display: flex;
+    gap: 120px;
+    margin-top: 24px;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 200px;
+    padding-left: 120px;
+}
+
+.content {
+    flex: 1;
+    background-color: transparent;
+    padding-right: 60px;
+}
+
+.radio_wrapper {
+    width: 300px;
+}
+
+.section {
+    max-width: 900px;
+    margin: 24px 0 0 0;
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 140%;
+    color: #353536;
+}
+
+.section span {
+    font-weight: 700;
+}
+
+.section h3 {
+    font-family: 'NT Somic', sans-serif;
+    font-size: 36px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 100%;
+    color: #353536;
+}
+
+.section hr {
+    background-color: #FFDD2D;
+    margin: 25px 0 0 0;
+    height: 1px;
+    width: 100%;
+    border: 1px solid #FFDD2D;
+}
+
+.text-imgSection {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin: 25px 0 0 0;
+}
+
+.textWelcome {
+    width: 503px;
+    z-index: 1;
+}
+
+.imgWelcome {
+    margin-top: -70px;
+    z-index: 0;
+}
+
+.imgWelcome img {
+    width: auto;
+    height: 319px;
+    object-fit: cover;
+}
+
+.textSection {
+    margin: 23px 0 0 0;
+}
+
+.section ul, ol {
+    list-style-position: inside;
+}
+
+.textPersonalAccount {
+    width: 856px;
+    z-index: 1;
+}
+
+.imgPersonalAccount {
+    margin-top: -70px;
+    margin-left: -150px;
+    z-index: 0;
+}
+
+.imgPersonalAccount img {
+    width: 159px;
+    height: 159px;
+    object-fit: cover;
+}
+
+.textCreateProject {
+    width: 727px;
+    z-index: 1;
+}
+
+.imgCreateProject {
+    margin-top: -70px;
+    margin-left: -50px;
+    z-index: 0;
+}
+
+.imgCreateProject img {
+    width: auto;
+    height: 282px;
+    object-fit: cover;
+}
+
+.textTasks {
+    width: 854px;
+    z-index: 1;
+}
+
+.imgTasks {
+    margin-top: 70px;
+    margin-left: -185px;
+    z-index: 0;
+}
+
+.imgTasks img {
+    width: auto;
+    height: 205px;
+    object-fit: cover;
+}
+
+.textSuggestion {
+    width: 781px;
+    z-index: 1;
+}
+
+.imgSuggestion {
+    margin-top: -55px;
+    margin-left: -200px;
+    z-index: 0;
+}
+
+.imgSuggestion img {
+    width: 254px;
+    height: 258px;
+    object-fit: cover;
+}
+
+.textFilter {
+    width: 100%;
+    z-index: 1;
+}
+
+.imgFilter {
+    margin-top: -90px;
+    margin-left: -100px;
+    z-index: 0;
+}
+
+.imgFilter img {
+    width: 327px;
+    height: 245px;
+    object-fit: cover;
+}

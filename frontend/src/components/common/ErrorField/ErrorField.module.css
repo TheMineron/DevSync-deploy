@@ -1,0 +1,36 @@
+.wrapper {
+    position: relative;
+    height: 0;
+    background: none;
+}
+
+.fieldError {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    transform: translateY(4px);
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    color: #FF2727;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0;
+    z-index: 10;
+    white-space: nowrap;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
