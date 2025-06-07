@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'djoser',
     'django_filters',
+    'django_prometheus',
 
     'users.apps.UsersConfig',
     'api.apps.ApiConfig',
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'django_prometheus.middleware.PrometheusBeforeMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -50,14 +52,11 @@ MIDDLEWARE = [
 
     'corsheaders.middleware.CorsMiddleware',
     'config.middleware.RequestLoggingMiddleware',
-    'users.middleware.UserActivityMiddleware'
+    'users.middleware.UserActivityMiddleware',
+    'django_prometheus.middleware.PrometheusAfterMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = [f"https://{host}" for host in ALLOWED_HOSTS]
-
-CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
-
-CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'config.urls'
 
@@ -83,7 +82,7 @@ ASGI_APPLICATION = 'config.asgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': "django.db.backends.postgresql",
+        'ENGINE': "django_prometheus.db.backends.postgresql",
         'NAME': os.getenv("POSTGRES_DB"),
         'USER': os.getenv("PG_BOUNCER_USER"),
         'PASSWORD': os.getenv("PG_BOUNCER_PASSWORD"),
@@ -95,23 +94,6 @@ DATABASES = {
         "CONN_MAX_AGE": 300,
     }
 }
-
-"""
-DATABASES = {
-    'default': {
-        'ENGINE': "django.db.backends.postgresql",
-        'NAME': os.getenv("POSTGRES_DB"),
-        'USER': os.getenv("POSTGRES_USER"),
-        'PASSWORD': os.getenv("POSTGRES_PASSWORD"),
-        'HOST': os.getenv("POSTGRES_HOST"),
-        'PORT': int(os.getenv("POSTGRES_PORT")),
-        "OPTIONS": {
-            "sslmode": "disable",
-        },
-        "CONN_MAX_AGE": 300,
-    }
-}
-"""
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -201,7 +183,7 @@ CELERY_RESULT_SERIALIZER = 'json'
 # caching
 CACHES = {
     "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
+        "BACKEND": "django_prometheus.cache.backends.redis.RedisCache",
         "LOCATION": f"redis://{REDIS_HOST}:{REDIS_PORT}/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
@@ -261,7 +243,7 @@ LOGGING = {
             'formatter': 'simple'
         },
 
-        'file': {
+        'file_server': {
             'level': 'INFO',
             'class': 'config.logging_handlers.DailyRotatingFileHandler',
             'filename': 'server.log',
@@ -301,13 +283,7 @@ LOGGING = {
 
     'loggers': {
         'django': {
-            'handlers': ['console', 'file'],
-            'level': 'INFO',
-            'propagate': True,
-        },
-
-        'users': {
-            'handlers': ['console', 'file'],
+            'handlers': ['console', 'file_server'],
             'level': 'INFO',
             'propagate': True,
         },

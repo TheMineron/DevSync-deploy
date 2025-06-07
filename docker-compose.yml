@@ -70,7 +70,7 @@ services:
     command: >
       bash -c "python manage.py collectstatic --noinput && 
       python manage.py migrate && 
-      gunicorn -b 0.0.0.0:8000 config.asgi:application -k uvicorn.workers.UvicornWorker"
+      gunicorn -b 0.0.0.0:8000 config.asgi:application -k uvicorn.workers.UvicornWorker --workers 4"
 
   celery-worker:
     build:
@@ -125,8 +125,37 @@ services:
       - devsync-network
     restart: unless-stopped
 
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./backend/metrics/prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - backend
+    networks:
+      - devsync-network
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s:%(http_port)s/grafana/
+      - GF_SERVER_SERVE_FROM_SUB_PATH=true
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./backend/metrics/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml
+    depends_on:
+      - prometheus
+    networks:
+      - devsync-network
+
 volumes:
   static_volume:
   media_volume:
   pg_data:
   redis_data:
+  grafana-storage:

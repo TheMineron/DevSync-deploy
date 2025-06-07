@@ -7,6 +7,7 @@ from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.layers import get_channel_layer
 
+from api.metrics import online_users
 from users.services import update_user_status
 
 logger: logging.Logger = logging.getLogger('django')
@@ -33,25 +34,19 @@ class NotificationConsumer(AsyncWebsocketConsumer):
             await self.close(code=4001)
             return
         self.connection_id = id(self)
-        logger.info(
-            f"User {self.user.id} connected (conn_id: {self.connection_id})"
-        )
         await self._setup_user_group()
         await self.accept()
         await self.update_user_status(is_online=True)
+        online_users.labels(app='devsync').inc()
 
     async def disconnect(self, close_code: int) -> None:
         if self.group_name:
             await self._remove_from_group()
-
+        online_users.labels(app='devsync').dec()
         await asyncio.sleep(15)
         if await self.check_user_connection_async(self.user.id):
             return
         await self.update_user_status(is_online=False)
-        logger.info(
-            f"User {self.user.id} disconnected (conn_id: {self.connection_id}, "
-            f"code: {close_code})"
-        )
 
     async def receive(self, text_data: Optional[str] = None, bytes_data: Optional[bytes] = None) -> None:
         try:

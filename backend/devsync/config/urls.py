@@ -6,6 +6,7 @@ from . import settings
 
 urlpatterns = [
 	path('api/', include('api.urls')),
+	path('', include('django_prometheus.urls')),
 ]
 
 if settings.DEBUG:
