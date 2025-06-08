@@ -79,6 +79,39 @@ class RoleViewSet(ProjectBasedModelViewSet):
         cache.invalidate_role(self.project.id, instance.id)
         cache.invalidate_project_permissions(self.project.id)
 
+    @action(methods=['patch'], detail=False)
+    @transaction.atomic
+    def batch(self, request, *args, **kwargs):
+        roles_data = request.data.get('roles', [])
+
+        role_ids = [role.get('id') for role in roles_data if role.get('id')]
+        roles = {role.id: role for role in self.get_queryset() if role.id in role_ids}
+
+        instances = []
+        for role_data in roles_data:
+            role_id = role_data.get('id')
+            if not role_id:
+                continue
+
+            instance = roles.get(role_id)
+            if not instance:
+                continue
+
+            instance_serializer = self.get_serializer(
+                instance,
+                data=role_data,
+                partial=True
+            )
+            instance_serializer.is_valid(raise_exception=True)
+            self.kwargs['pk'] = instance.id
+            self.perform_update(instance_serializer)
+            instances.append(instance_serializer.instance)
+
+        return Response(
+            RoleSerializer(instances, many=True).data,
+            status=status.HTTP_200_OK
+        )
+
 
 class ProjectMemberRoleViewSet(ProjectMemberBasedReadCreateDeleteViewSet):
     renderer_classes = [RoleListRenderer]

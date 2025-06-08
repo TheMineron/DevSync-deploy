@@ -580,6 +580,7 @@
     font-size: 18px;
     font-weight: 500;
     color: #353536;
+    font-family: "Helvetica Neue", sans-serif;
 }
 
 .departmentDescription {
@@ -724,4 +725,12 @@
         height: 100%;
         z-index: 1001;
     }
+}
+
+.departmentCard {
+    background-color: #F6F7F8;
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
