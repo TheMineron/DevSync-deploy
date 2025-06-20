@@ -20,10 +20,10 @@ class NotificationActionTemplate:
 
 @dataclass(frozen=True)
 class NotificationTemplate:
-    UPDATE_FIELDS: ClassVar[list[str]] = ['title', 'formatted_message', 'footnote']
+    UPDATE_FIELDS: ClassVar[list[str]] = ['title', 'message', 'footnote']
 
     title: str
-    formatted_message: str
+    message: str
     actions: MappingProxyType[ActionName, NotificationActionTemplate] = MappingProxyType({})
     footnote: Optional[str] = None
 
