@@ -20,7 +20,7 @@ class NotificationActionTemplate:
 
 @dataclass(frozen=True)
 class NotificationTemplate:
-    UPDATE_FIELDS: ClassVar[list[str]] = ['title', 'message', 'footnote']
+    UPDATE_FIELDS: ClassVar[list[str]] = ['title', 'formatted_message', 'footnote']
 
     title: str
     message: str
