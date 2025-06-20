@@ -23,7 +23,7 @@ class NotificationTemplate:
     UPDATE_FIELDS: ClassVar[list[str]] = ['title', 'formatted_message', 'footnote']
 
     title: str
-    message: str
+    formatted_message: str
     actions: MappingProxyType[ActionName, NotificationActionTemplate] = MappingProxyType({})
     footnote: Optional[str] = None
 
