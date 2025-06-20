@@ -91,7 +91,7 @@ export const useWebSocketNotifications = (options: UseWebSocketNotificationsOpti
             }
 
             // Создаем WebSocket соединение
-            const wsUrl = `ws://localhost:80/ws/notifications/?token=${token}`;
+            const wsUrl = `wss://dev-sync.ru/ws/notifications/?token=${token}`;
             const ws = new WebSocket(wsUrl);
             websocketRef.current = ws;
 
